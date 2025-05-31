@@ -69,6 +69,11 @@ _git_switch_to_branch(){
   [ -n "${INPUT_COMMIT_BRANCH}" ] || return 0
   git fetch --depth=1
   git checkout ${INPUT_COMMIT_BRANCH}
+
+  if command -v git-lfs >/dev/null; then
+    git lfs install --local
+    git lfs pull
+  fi
 }
 
 _git_add() {
@@ -87,7 +92,7 @@ _git_commit() {
   local INPUT_COMMIT_OPTIONS_ARRAY=( $INPUT_COMMIT_OPTIONS );
   echo "Committing back to the branch"
 
-  # Check that there is a diff to be committed.. 
+  # Check that there is a diff to be committed..
   git diff --cached --exit-code --quiet && return 0
 
   git \
