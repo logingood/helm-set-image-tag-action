@@ -69,11 +69,6 @@ _git_switch_to_branch(){
   [ -n "${INPUT_COMMIT_BRANCH}" ] || return 0
   git fetch --depth=1
   git checkout ${INPUT_COMMIT_BRANCH}
-
-  if command -v git-lfs >/dev/null; then
-    git lfs install --local
-    git lfs pull
-  fi
 }
 
 _git_add() {
